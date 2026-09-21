@@ -1,4 +1,4 @@
-const carsData = [
+const carsCatalog = [
   {
     id: 1,
     brand: "Toyota",
@@ -145,116 +145,59 @@ const carsData = [
   }
 ];
 
-const elements = {
-  carsGrid: document.getElementById("carsGrid"),
-  emptyState: document.getElementById("emptyState"),
-  resultsCount: document.getElementById("resultsCount"),
-  searchInput: document.getElementById("searchInput"),
-  typeFilter: document.getElementById("typeFilter"),
-  brandFilter: document.getElementById("brandFilter"),
-  transmissionFilter: document.getElementById("transmissionFilter"),
-  priceFilter: document.getElementById("priceFilter"),
-  resetFiltersBtn: document.getElementById("resetFiltersBtn")
+const detailElements = {
+  image: document.getElementById("carImage"),
+  name: document.getElementById("carName"),
+  price: document.getElementById("carPrice"),
+  type: document.getElementById("carType"),
+  seats: document.getElementById("carSeats"),
+  transmission: document.getElementById("carTransmission"),
+  fuel: document.getElementById("carFuel"),
+  year: document.getElementById("carYear"),
+  features: document.getElementById("carFeatures"),
+  description: document.getElementById("carDescription"),
+  conditions: document.getElementById("carConditions"),
+  rentBtn: document.getElementById("rentCarBtn")
 };
 
-function uniqueValues(key) {
-  return [...new Set(carsData.map((car) => car[key]))].sort();
+function findCarFromQuery() {
+  const params = new URLSearchParams(window.location.search);
+  const carId = Number(params.get("id"));
+  if (!carId) return carsCatalog[0];
+
+  return carsCatalog.find((car) => car.id === carId) || carsCatalog[0];
 }
 
-function fillSelectOptions(selectElement, values) {
-  values.forEach((value) => {
-    const option = document.createElement("option");
-    option.value = value;
-    option.textContent = value;
-    selectElement.appendChild(option);
+function renderCarDetails(car) {
+  detailElements.image.src = car.image;
+  detailElements.image.alt = `${car.brand} ${car.model}`;
+
+  detailElements.name.textContent = `${car.brand} ${car.model}`;
+  detailElements.price.textContent = `$${car.pricePerDay} / day`;
+  detailElements.type.textContent = car.type;
+  detailElements.seats.textContent = String(car.seats);
+  detailElements.transmission.textContent = car.transmission;
+  detailElements.fuel.textContent = car.fuelType;
+  detailElements.year.textContent = String(car.modelYear);
+  detailElements.description.textContent = car.description;
+  detailElements.conditions.textContent = car.rentalConditions;
+
+  detailElements.features.innerHTML = car.features
+    .map((feature) => `<li>${feature}</li>`)
+    .join("");
+}
+
+function bindRentButton(car) {
+  detailElements.rentBtn.addEventListener("click", () => {
+    localStorage.setItem("selectedRentalCar", JSON.stringify(car));
+    window.location.href = `index.html?carId=${car.id}#booking`;
   });
 }
 
-function populateFilterLists() {
-  fillSelectOptions(elements.typeFilter, uniqueValues("type"));
-  fillSelectOptions(elements.brandFilter, uniqueValues("brand"));
+function initCarDetailsPage() {
+  const selectedCar = findCarFromQuery();
+  renderCarDetails(selectedCar);
+  bindRentButton(selectedCar);
 }
 
-function createCardTemplate(car) {
-  return `
-    <div class="col-12 col-sm-6 col-xl-4">
-      <article class="car-card">
-        <img src="${car.image}" alt="${car.brand} ${car.model}" class="car-image" loading="lazy" />
-        <div class="car-card-body">
-          <h2 class="car-title">${car.brand} ${car.model}</h2>
-          <p class="car-meta">Type: ${car.type}</p>
-          <p class="car-meta">Seats: ${car.seats}</p>
-          <p class="car-meta">Transmission: ${car.transmission}</p>
-          <p class="price-line">$${car.pricePerDay} / day</p>
-          <a href="car-details.html?id=${car.id}" class="btn btn-outline-primary w-100">View Details</a>
-        </div>
-      </article>
-    </div>
-  `;
-}
-
-function getFilteredCars() {
-  const searchText = elements.searchInput.value.trim().toLowerCase();
-  const selectedType = elements.typeFilter.value;
-  const selectedBrand = elements.brandFilter.value;
-  const selectedTransmission = elements.transmissionFilter.value;
-  const selectedPrice = elements.priceFilter.value;
-
-  return carsData.filter((car) => {
-    const bySearch =
-      car.brand.toLowerCase().includes(searchText) ||
-      car.model.toLowerCase().includes(searchText);
-    const byType = selectedType === "all" || car.type === selectedType;
-    const byBrand = selectedBrand === "all" || car.brand === selectedBrand;
-    const byTransmission =
-      selectedTransmission === "all" || car.transmission === selectedTransmission;
-    const byPrice = selectedPrice === "all" || car.pricePerDay <= Number(selectedPrice);
-
-    return bySearch && byType && byBrand && byTransmission && byPrice;
-  });
-}
-
-function renderCars() {
-  const filteredCars = getFilteredCars();
-  elements.carsGrid.innerHTML = filteredCars.map(createCardTemplate).join("");
-
-  elements.resultsCount.textContent = `${filteredCars.length} car(s) found`;
-
-  if (filteredCars.length === 0) {
-    elements.emptyState.classList.remove("d-none");
-  } else {
-    elements.emptyState.classList.add("d-none");
-  }
-}
-
-function resetFilters() {
-  elements.searchInput.value = "";
-  elements.typeFilter.value = "all";
-  elements.brandFilter.value = "all";
-  elements.transmissionFilter.value = "all";
-  elements.priceFilter.value = "all";
-  renderCars();
-}
-
-function bindEvents() {
-  [
-    elements.searchInput,
-    elements.typeFilter,
-    elements.brandFilter,
-    elements.transmissionFilter,
-    elements.priceFilter
-  ].forEach((element) => {
-    element.addEventListener("input", renderCars);
-    element.addEventListener("change", renderCars);
-  });
-
-  elements.resetFiltersBtn.addEventListener("click", resetFilters);
-}
-
-function initAvailableCarsPage() {
-  populateFilterLists();
-  bindEvents();
-  renderCars();
-}
-
-document.addEventListener("DOMContentLoaded", initAvailableCarsPage);
+document.addEventListener("DOMContentLoaded", initCarDetailsPage);

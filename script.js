@@ -109,9 +109,29 @@ function setCurrentYear() {
   yearElement.textContent = new Date().getFullYear();
 }
 
+function showSelectedCarForBooking() {
+  const notice = document.getElementById("selectedCarNotice");
+  if (!notice) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const selectedCarId = params.get("carId");
+  const storedCarText = localStorage.getItem("selectedRentalCar");
+  const storedCar = storedCarText ? JSON.parse(storedCarText) : null;
+
+  if (!storedCar) return;
+
+  if (selectedCarId && String(storedCar.id) !== selectedCarId) {
+    return;
+  }
+
+  notice.classList.remove("d-none");
+  notice.innerHTML = `Selected Car: <strong>${storedCar.brand} ${storedCar.model}</strong> (${storedCar.type}) - $${storedCar.pricePerDay}/day`;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   renderCars();
   setDefaultDates();
   initializeSearchForm();
+  showSelectedCarForBooking();
   setCurrentYear();
 });

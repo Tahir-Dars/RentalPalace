@@ -190,7 +190,7 @@ function renderCarDetails(car) {
 function bindRentButton(car) {
   detailElements.rentBtn.addEventListener("click", () => {
     localStorage.setItem("selectedRentalCar", JSON.stringify(car));
-    window.location.href = `index.html?carId=${car.id}#booking`;
+    window.location.href = `booking.html?carId=${car.id}`;
   });
 }
 

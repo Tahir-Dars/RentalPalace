@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Car Rental House | Booking</title>
+  <meta name="description" content="Confirm your car rental booking details." />
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="booking.css" />
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+      <div class="container py-2">
+        <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+          <span class="brand-mark">CR</span>
+          <span class="brand-text">Car Rental House</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNav"
+          aria-controls="mainNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-3">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="available-cars.html">Cars</a></li>
+            <li class="nav-item"><a class="nav-link active" href="booking.html">My Booking</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="py-5">
+    <div class="container">
+      <h1 class="page-title mb-4">Car Rental Booking</h1>
+
+      <div class="row g-4 align-items-start">
+        <div class="col-12 col-lg-7">
+          <section class="panel-card">
+            <h2 class="panel-title">Booking Details</h2>
+
+            <div id="bookingMessage" class="alert d-none" role="alert" aria-live="polite"></div>
+
+            <form id="bookingForm" novalidate>
+              <div class="row g-3">
+                <div class="col-12">
+                  <label for="customerName" class="form-label">Customer Name</label>
+                  <input id="customerName" type="text" class="form-control" required />
+                  <div class="invalid-feedback">Please enter your name.</div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label for="phoneNumber" class="form-label">Phone Number</label>
+                  <input id="phoneNumber" type="tel" class="form-control" placeholder="e.g. +1 555 123 4567" required />
+                  <div class="invalid-feedback">Please enter your phone number.</div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label for="pickupLocation" class="form-label">Pickup Location</label>
+                  <input id="pickupLocation" type="text" class="form-control" required />
+                  <div class="invalid-feedback">Please enter pickup location.</div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label for="pickupDate" class="form-label">Pickup Date</label>
+                  <input id="pickupDate" type="date" class="form-control" required />
+                  <div class="invalid-feedback">Please choose pickup date.</div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label for="returnDate" class="form-label">Return Date</label>
+                  <input id="returnDate" type="date" class="form-control" required />
+                  <div class="invalid-feedback">Please choose a valid return date.</div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label for="pickupTime" class="form-label">Pickup Time</label>
+                  <input id="pickupTime" type="time" class="form-control" required />
+                  <div class="invalid-feedback">Please select pickup time.</div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg confirm-btn mt-4">Confirm Booking</button>
+            </form>
+          </section>
+        </div>
+
+        <div class="col-12 col-lg-5">
+          <section class="panel-card">
+            <h2 class="panel-title">Selected Car</h2>
+            <div class="selected-car-wrap">
+              <img id="selectedCarImage" src="" alt="Selected car" class="selected-car-image" />
+              <div>
+                <h3 id="selectedCarName" class="selected-car-name mb-1"></h3>
+                <p id="selectedCarPrice" class="selected-car-price mb-0"></p>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel-card mt-4">
+            <h2 class="panel-title">Rental Summary</h2>
+            <div class="summary-row"><span>Price per day</span><strong id="summaryPricePerDay">$0</strong></div>
+            <div class="summary-row"><span>Rental days</span><strong id="summaryRentalDays">0</strong></div>
+            <hr />
+            <div class="summary-row total"><span>Total price</span><strong id="summaryTotalPrice">$0</strong></div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
+  <script src="booking.js"></script>
+</body>
+</html>

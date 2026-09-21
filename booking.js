@@ -161,6 +161,10 @@ const bookingElements = {
 
 let activeCar = null;
 
+function generateBookingId() {
+  return `BK-${Date.now().toString().slice(-8)}`;
+}
+
 function getSelectedCar() {
   const params = new URLSearchParams(window.location.search);
   const queryCarId = Number(params.get("carId"));
@@ -274,6 +278,49 @@ function showMessage(type, text) {
   message.classList.remove("d-none");
 }
 
+function saveActiveBooking() {
+  const rentalDays = Number(bookingElements.summaryRentalDays.textContent);
+  const totalPrice = activeCar.pricePerDay * rentalDays;
+  const existingBookingText = localStorage.getItem("activeBooking");
+  const existingBooking = existingBookingText ? JSON.parse(existingBookingText) : null;
+
+  const bookingData = {
+    bookingId: existingBooking?.bookingId || generateBookingId(),
+    carId: activeCar.id,
+    carName: `${activeCar.brand} ${activeCar.model}`,
+    carImage: activeCar.image,
+    pickupLocation: document.getElementById("pickupLocation").value.trim(),
+    pickupDate: bookingElements.pickupDate.value,
+    pickupTime: bookingElements.pickupTime.value,
+    returnDate: bookingElements.returnDate.value,
+    rentalDays,
+    pricePerDay: activeCar.pricePerDay,
+    totalPrice,
+    customerName: document.getElementById("customerName").value.trim(),
+    phoneNumber: document.getElementById("phoneNumber").value.trim(),
+    status: "Active"
+  };
+
+  localStorage.setItem("activeBooking", JSON.stringify(bookingData));
+}
+
+function prefillBookingFormFromActiveBooking() {
+  const params = new URLSearchParams(window.location.search);
+  const isModifyMode = params.get("edit") === "1";
+  if (!isModifyMode) return;
+
+  const activeBookingText = localStorage.getItem("activeBooking");
+  const activeBooking = activeBookingText ? JSON.parse(activeBookingText) : null;
+  if (!activeBooking) return;
+
+  document.getElementById("customerName").value = activeBooking.customerName || "";
+  document.getElementById("phoneNumber").value = activeBooking.phoneNumber || "";
+  document.getElementById("pickupLocation").value = activeBooking.pickupLocation || "";
+  bookingElements.pickupDate.value = activeBooking.pickupDate || bookingElements.pickupDate.value;
+  bookingElements.returnDate.value = activeBooking.returnDate || bookingElements.returnDate.value;
+  bookingElements.pickupTime.value = activeBooking.pickupTime || bookingElements.pickupTime.value;
+}
+
 function bindEvents() {
   bookingElements.pickupDate.addEventListener("change", updateRentalSummary);
   bookingElements.returnDate.addEventListener("change", updateRentalSummary);
@@ -290,10 +337,16 @@ function bindEvents() {
     const days = Number(bookingElements.summaryRentalDays.textContent);
     const totalPrice = bookingElements.summaryTotalPrice.textContent;
 
+    saveActiveBooking();
+
     showMessage(
       "success",
       `Booking confirmed for ${activeCar.brand} ${activeCar.model}. Duration: ${days} day(s). Total: ${totalPrice}.`
     );
+
+    setTimeout(() => {
+      window.location.href = "my-booking.html";
+    }, 600);
   });
 
   bookingElements.bookingForm.querySelectorAll("input[required]").forEach((field) => {
@@ -307,6 +360,7 @@ function initBookingPage() {
 
   renderSelectedCar(activeCar);
   setDefaultDateAndTime();
+  prefillBookingFormFromActiveBooking();
   updateRentalSummary();
   bindEvents();
 }

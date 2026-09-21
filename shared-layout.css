@@ -1,0 +1,116 @@
+:root {
+  --bg-main: #f3f8fc;
+  --bg-soft: #ffffff;
+  --text-main: #17212b;
+  --text-muted: #526375;
+  --primary: #0f6e8c;
+  --primary-dark: #0b4f66;
+  --accent: #f08a24;
+  --accent-dark: #d8710f;
+  --surface-border: #dce7f0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Outfit", sans-serif;
+  color: var(--text-main);
+  background:
+    radial-gradient(circle at 14% 6%, rgba(15, 110, 140, 0.12), transparent 34%),
+    radial-gradient(circle at 88% 0%, rgba(240, 138, 36, 0.11), transparent 30%),
+    var(--bg-main);
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  font-weight: 700;
+}
+
+.brand-text {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.navbar .nav-link {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+  color: var(--primary);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+#siteFooter {
+  margin-top: 2.5rem;
+  background: #0d1e2a;
+  color: #f2f7fb;
+}
+
+.footer-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.footer-subtitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.footer-text {
+  color: rgba(242, 247, 251, 0.82);
+  margin: 0 0 0.35rem;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.35rem;
+}
+
+.footer-links a {
+  color: rgba(242, 247, 251, 0.86);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #fff;
+}
+
+.footer-divider {
+  border-color: rgba(255, 255, 255, 0.2);
+  margin-top: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.copyright {
+  color: rgba(242, 247, 251, 0.78);
+  font-size: 0.9rem;
+  text-align: center;
+}

@@ -4,7 +4,7 @@ const cars = [
     type: "Sedan",
     seats: 5,
     transmission: "Automatic",
-    pricePerDay: 58,
+    pricePerDay: 18500,
     image:
       "https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=1200&q=80"
   },
@@ -13,7 +13,7 @@ const cars = [
     type: "SUV",
     seats: 7,
     transmission: "Automatic",
-    pricePerDay: 75,
+    pricePerDay: 25000,
     image:
       "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1200&q=80"
   },
@@ -22,7 +22,7 @@ const cars = [
     type: "Luxury Sedan",
     seats: 5,
     transmission: "Automatic",
-    pricePerDay: 95,
+    pricePerDay: 42000,
     image:
       "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1200&q=80"
   },
@@ -31,7 +31,7 @@ const cars = [
     type: "Compact",
     seats: 5,
     transmission: "Manual",
-    pricePerDay: 42,
+    pricePerDay: 10500,
     image:
       "https://images.unsplash.com/photo-1580414057403-c5f451f30e1c?auto=format&fit=crop&w=1200&q=80"
   }

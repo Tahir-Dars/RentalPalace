@@ -9,7 +9,8 @@ function renderSharedHeader() {
   const activeKey = getNavActiveKey();
   const isHome = activeKey === "home";
   const isCars = activeKey === "cars";
-  const isBooking = activeKey === "booking";
+  const isBookingForm = activeKey === "booking-form";
+  const isMyBooking = activeKey === "booking";
 
   host.innerHTML = `
     <nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
@@ -33,7 +34,8 @@ function renderSharedHeader() {
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-3">
             <li class="nav-item"><a class="nav-link ${isHome ? "active" : ""}" href="index.html">Home</a></li>
             <li class="nav-item"><a class="nav-link ${isCars ? "active" : ""}" href="available-cars.html">Cars</a></li>
-            <li class="nav-item"><a class="nav-link ${isBooking ? "active" : ""}" href="my-booking.html">My Booking</a></li>
+            <li class="nav-item"><a class="nav-link ${isBookingForm ? "active" : ""}" href="booking.html">Booking</a></li>
+            <li class="nav-item"><a class="nav-link ${isMyBooking ? "active" : ""}" href="my-booking.html">My Booking</a></li>
             <li class="nav-item"><a class="nav-link" href="#siteFooter">Contact</a></li>
           </ul>
         </div>
@@ -55,14 +57,15 @@ function renderSharedFooter() {
         <div class="col-12 col-lg-4">
           <h3 class="footer-title">Car Rental House</h3>
           <p class="footer-text">Reliable car rentals for business trips, vacations, and everyday travel.</p>
-          <p class="footer-text mb-0">Email: support@carrentalhouse.pk</p>
-          <p class="footer-text">Phone: +92 21 1234 5678</p>
+          <p class="footer-text mb-0">Email: <a href="mailto:support@carrentalhouse.pk">support@carrentalhouse.pk</a></p>
+          <p class="footer-text">Phone: <a href="tel:+922112345678">+92 21 1234 5678</a></p>
         </div>
         <div class="col-6 col-lg-2">
           <h4 class="footer-subtitle">Navigate</h4>
           <ul class="footer-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="available-cars.html">Cars</a></li>
+            <li><a href="booking.html">Booking</a></li>
             <li><a href="my-booking.html">My Booking</a></li>
             <li><a href="#siteFooter">Contact</a></li>
           </ul>

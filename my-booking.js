@@ -16,6 +16,14 @@ const elements = {
   modifyBookingBtn: document.getElementById("modifyBookingBtn")
 };
 
+function formatCurrency(amount, currency = "PKR") {
+  return new Intl.NumberFormat("en-PK", {
+    style: "currency",
+    currency,
+    maximumFractionDigits: 0
+  }).format(Number(amount) || 0);
+}
+
 function getActiveBooking() {
   const bookingText = localStorage.getItem("activeBooking");
   return bookingText ? JSON.parse(bookingText) : null;
@@ -49,6 +57,8 @@ function showBookingState() {
 }
 
 function renderBooking(booking) {
+  const currencyCode = booking.currency || "PKR";
+
   elements.bookingId.textContent = booking.bookingId;
   elements.carImage.src = booking.carImage;
   elements.carImage.alt = booking.carName;
@@ -57,8 +67,8 @@ function renderBooking(booking) {
   elements.pickupDateTime.textContent = `${formatDisplayDate(booking.pickupDate)} at ${booking.pickupTime}`;
   elements.returnDate.textContent = formatDisplayDate(booking.returnDate);
   elements.rentalDays.textContent = `${booking.rentalDays} day(s)`;
-  elements.pricePerDay.textContent = `$${booking.pricePerDay}`;
-  elements.totalPrice.textContent = `$${booking.totalPrice}`;
+  elements.pricePerDay.textContent = formatCurrency(booking.pricePerDay, currencyCode);
+  elements.totalPrice.textContent = formatCurrency(booking.totalPrice, currencyCode);
   elements.bookingStatus.textContent = booking.status || "Active";
 }
 

@@ -160,9 +160,19 @@ const bookingElements = {
 };
 
 let activeCar = null;
+const CURRENCY_CODE = "PKR";
+
+function formatCurrency(amount) {
+  return new Intl.NumberFormat("en-PK", {
+    style: "currency",
+    currency: CURRENCY_CODE,
+    maximumFractionDigits: 0
+  }).format(Number(amount) || 0);
+}
 
 function generateBookingId() {
-  return `BK-${Date.now().toString().slice(-8)}`;
+  const randomPart = Math.floor(100 + Math.random() * 900);
+  return `SDH-${Date.now().toString().slice(-6)}-${randomPart}`;
 }
 
 function getSelectedCar() {
@@ -187,9 +197,9 @@ function renderSelectedCar(car) {
   bookingElements.selectedCarImage.src = car.image;
   bookingElements.selectedCarImage.alt = `${car.brand} ${car.model}`;
   bookingElements.selectedCarName.textContent = `${car.brand} ${car.model}`;
-  bookingElements.selectedCarPrice.textContent = `$${car.pricePerDay} / day`;
+  bookingElements.selectedCarPrice.textContent = `${formatCurrency(car.pricePerDay)} / day`;
 
-  bookingElements.summaryPricePerDay.textContent = `$${car.pricePerDay}`;
+  bookingElements.summaryPricePerDay.textContent = formatCurrency(car.pricePerDay);
 }
 
 function toDateAtMidnight(dateString) {
@@ -219,13 +229,13 @@ function updateRentalSummary() {
 
   if (days <= 0) {
     bookingElements.summaryRentalDays.textContent = "0";
-    bookingElements.summaryTotalPrice.textContent = "$0";
+    bookingElements.summaryTotalPrice.textContent = formatCurrency(0);
     return;
   }
 
   const totalPrice = days * activeCar.pricePerDay;
   bookingElements.summaryRentalDays.textContent = String(days);
-  bookingElements.summaryTotalPrice.textContent = `$${totalPrice}`;
+  bookingElements.summaryTotalPrice.textContent = formatCurrency(totalPrice);
 }
 
 function setDefaultDateAndTime() {
@@ -286,6 +296,16 @@ function saveActiveBooking() {
 
   const bookingData = {
     bookingId: existingBooking?.bookingId || generateBookingId(),
+    selectedCar: {
+      id: activeCar.id,
+      brand: activeCar.brand,
+      model: activeCar.model,
+      image: activeCar.image,
+      type: activeCar.type,
+      transmission: activeCar.transmission,
+      fuelType: activeCar.fuelType,
+      modelYear: activeCar.modelYear
+    },
     carId: activeCar.id,
     carName: `${activeCar.brand} ${activeCar.model}`,
     carImage: activeCar.image,
@@ -296,6 +316,7 @@ function saveActiveBooking() {
     rentalDays,
     pricePerDay: activeCar.pricePerDay,
     totalPrice,
+    currency: CURRENCY_CODE,
     customerName: document.getElementById("customerName").value.trim(),
     phoneNumber: document.getElementById("phoneNumber").value.trim(),
     status: "Active"
@@ -341,7 +362,7 @@ function bindEvents() {
 
     showMessage(
       "success",
-      `Booking confirmed for ${activeCar.brand} ${activeCar.model}. Duration: ${days} day(s). Total: ${totalPrice}.`
+      `Booking confirmed for ${activeCar.brand} ${activeCar.model}. Duration: ${days} day(s). Total: ${formatCurrency(totalPrice)}.`
     );
 
     setTimeout(() => {

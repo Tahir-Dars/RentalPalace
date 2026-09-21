@@ -55,8 +55,8 @@ function renderSharedFooter() {
         <div class="col-12 col-lg-4">
           <h3 class="footer-title">Car Rental House</h3>
           <p class="footer-text">Reliable car rentals for business trips, vacations, and everyday travel.</p>
-          <p class="footer-text mb-0">Email: support@carrentalhouse.com</p>
-          <p class="footer-text">Phone: +1 (555) 123-4567</p>
+          <p class="footer-text mb-0">Email: support@carrentalhouse.pk</p>
+          <p class="footer-text">Phone: +92 21 1234 5678</p>
         </div>
         <div class="col-6 col-lg-2">
           <h4 class="footer-subtitle">Navigate</h4>
@@ -70,10 +70,10 @@ function renderSharedFooter() {
         <div class="col-6 col-lg-3">
           <h4 class="footer-subtitle">Locations</h4>
           <ul class="footer-links">
-            <li><a href="#">New York</a></li>
-            <li><a href="#">Los Angeles</a></li>
-            <li><a href="#">Chicago</a></li>
-            <li><a href="#">Miami</a></li>
+            <li><a href="#">Karachi</a></li>
+            <li><a href="#">Hyderabad</a></li>
+            <li><a href="#">Sukkur</a></li>
+            <li><a href="#">Larkana</a></li>
           </ul>
         </div>
         <div class="col-12 col-lg-3">
